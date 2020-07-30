@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Smoke" verbose="1">
+    <parameter name="browser" value="chrome"/>
+    <test name="UserStories">
+        <classes>
+            <class name="ua.com.rozetka.stories.BuyingProductStories"/>
+        </classes>
+    </test>
+</suite>
