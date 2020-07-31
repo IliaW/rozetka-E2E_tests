@@ -10,7 +10,7 @@
 ### How to run
 - Open command line
 - Go to the project directory
-- Run command  ```mvn test -DsuiteXmlFile=src/test/resources/testng.xml``` 
+- Run command  ```mvn test``` 
 
 OR
 
