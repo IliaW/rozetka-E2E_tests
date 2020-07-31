@@ -4,7 +4,7 @@
     <parameter name="browser" value="chrome"/>
     <test name="UserStories">
         <classes>
-            <class name="ua.com.rozetka.stories.BuyingProductStories"/>
+            <class name="ua.com.rozetka.stories.BuyingProductTest"/>
         </classes>
     </test>
 </suite>

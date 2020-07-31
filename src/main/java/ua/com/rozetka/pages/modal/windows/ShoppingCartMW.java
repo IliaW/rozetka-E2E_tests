@@ -26,12 +26,12 @@ public class ShoppingCartMW extends Driver implements ModalWindow {
    }
 
    @Override
-   @Step("Close card modal window")
+   @Step("Close cart modal window")
    public void close() {
       click(CLOSE_BUTTON);
    }
 
-   @Step("CLick [Card] on the header")
+   @Step("CLick [Cart] on the header")
    public void open() {
       click(CART_BUTTON);
       isLoaded();

@@ -27,13 +27,13 @@ public class LoginMW extends Driver implements ModalWindow {
       click(CLOSE_BUTTON);
    }
 
-   @Step("Enter login {login}")
+   @Step("Enter login '{login}'")
    public LoginMW enterLogin(String login) {
       enterText(login, LOGIN_FIELD);
       return this;
    }
 
-   @Step("Enter password {pass}")
+   @Step("Enter password '{pass}'")
    public LoginMW enterPassword(String pass) {
       enterText(pass, PASSWORD_FIELD);
       return this;

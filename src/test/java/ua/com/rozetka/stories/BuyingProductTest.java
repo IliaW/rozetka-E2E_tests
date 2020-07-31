@@ -8,7 +8,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.com.rozetka.Launcher;
-import ua.com.rozetka.models.*;
+import ua.com.rozetka.models.Address;
+import ua.com.rozetka.models.Product;
+import ua.com.rozetka.models.User;
+import ua.com.rozetka.models.UserBuilder;
 import ua.com.rozetka.pages.CheckoutPage;
 import ua.com.rozetka.pages.MainPage;
 import ua.com.rozetka.pages.ProductPage;
@@ -19,7 +22,7 @@ import ua.com.rozetka.pages.objects.HeaderBottomLine;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BuyingProductStories extends Launcher {
+public class BuyingProductTest extends Launcher {
 
    private MainPage mainPage;
    private ProductPage productPage;
@@ -57,7 +60,7 @@ public class BuyingProductStories extends Launcher {
    @Feature("Authorization")
    @Description(value = "Login with valid credential")
    @Severity(SeverityLevel.NORMAL)
-   public void loginWithValidCredential() {
+   public void loginWithValidCredentialTest() {
       mainPage.openByURL();
       mainPage.openLoginForm();
       loginMW.enterLogin(user.getLogin())
@@ -69,9 +72,9 @@ public class BuyingProductStories extends Launcher {
 
    @Test(priority = 2)
    @Feature("Shopping Cart")
-   @Description(value = "Adding random product to shopping card")
+   @Description(value = "Adding random product to shopping cart")
    @Severity(SeverityLevel.CRITICAL)
-   public void addItemToCart() {
+   public void addItemToCartTest() {
       mainPage.openByURL();
       mainPage.openRandomCategory();
       productsPage.openRandomProductOnThePage();
@@ -85,7 +88,7 @@ public class BuyingProductStories extends Launcher {
    @Feature("Checkout")
    @Description(value = "Filling out order form with user data")
    @Severity(SeverityLevel.CRITICAL)
-   public void fillOrderForm() {
+   public void fillOrderFormTest() {
       mainPage.openByURL();
       headerBottomLine.openShoppingCart();
       shoppingCartMW.clickOrderButton();
@@ -96,6 +99,7 @@ public class BuyingProductStories extends Launcher {
       checkoutPage.setAddress(user.getAddress().getStreet(),
               user.getAddress().getHouse(),
               user.getAddress().getFlat());
+      //checkoutPage.clickOrderButton();
       //assertThat("something happens");
    }
 }

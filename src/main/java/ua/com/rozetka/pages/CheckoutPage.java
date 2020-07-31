@@ -42,7 +42,7 @@ public class CheckoutPage extends Driver implements WebPage {
       return checkThat.isDisplayed(CHECKOUT_HEADER, NAME_SURNAME_FIELD);
    }
 
-   @Step("Set {nameAndSurname} in Name field]")
+   @Step("Set '{nameAndSurname}' in Name field]")
    public CheckoutPage setNameAndSurname(String nameAndSurname) {
       if (isLoaded()) {
          sleep(1000);
@@ -51,7 +51,7 @@ public class CheckoutPage extends Driver implements WebPage {
       return this;
    }
 
-   @Step("Set {city} in City field]")
+   @Step("Set '{city}' in the City field]")
    public CheckoutPage setCity(String city) {
       enterText(city, CITY_FIELD);
       sleep(2000);
@@ -59,7 +59,7 @@ public class CheckoutPage extends Driver implements WebPage {
       return this;
    }
 
-   @Step("Set {mobile} in name the Mobile Phone field")
+   @Step("Set '{mobile}' in name the Mobile Phone field")
    public CheckoutPage setPhoneNumber(String mobile) {
       enterText(mobile, MOBILE_FIELD);
       sleep(2000);
@@ -77,7 +77,7 @@ public class CheckoutPage extends Driver implements WebPage {
       return !statusLocator.contains("disabled");
    }
 
-   @Step("Set Address with {street} {house} {flat}")
+   @Step("Set Street:'{street}', House:'{house}', Flat:'{flat}' in the Address fields")
    public CheckoutPage setAddress(String street, String house, String flat) {
       if (checkThat.isDisplayed(COURIER_CHECKBOX)) {
          clickJSE(COURIER_CHECKBOX);
@@ -90,7 +90,7 @@ public class CheckoutPage extends Driver implements WebPage {
       return this;
    }
 
-   @Step("Enter card credential: {cardNumber} {month} {year} {cvv}")
+   @Step("Enter card credential: '{cardNumber}', '{month}', '{year}', '{cvv}'")
    public CheckoutPage payByCard(String cardNumber, String month, String year, String cvv) {
       if (checkThat.isDisplayed(CARD_CHECKBOX)) {
          clickJSE(CARD_CHECKBOX);
