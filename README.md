@@ -8,10 +8,6 @@
 - Allure
   
 ### How to run
-```
-mvn test
-```
-or
 run ```
     src/test/resources/testng.xml
     ``` file
