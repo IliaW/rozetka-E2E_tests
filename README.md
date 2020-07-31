@@ -8,6 +8,11 @@
 - Allure
   
 ### How to run
-run ```
-    src/test/resources/testng.xml
-    ``` file
+- Open command line
+- Go to the project directory
+- Run command  ```mvn test -DsuiteXmlFile=src/test/resources/testng.xml``` 
+
+OR
+
+- Open IDE
+- Run ```testng.xml``` file
