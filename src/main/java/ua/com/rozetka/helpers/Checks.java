@@ -13,11 +13,10 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class Checks {
 
-   private WebDriverWait wait;
-   public final int DEFAULT_EXPLICIT_WAIT_TIME = 10;
+   private final WebDriverWait wait;
 
-   public Checks(WebDriver wd) {
-      wait = new WebDriverWait(wd, DEFAULT_EXPLICIT_WAIT_TIME);
+   public Checks(WebDriver wd, long timeOut) {
+      wait = new WebDriverWait(wd, timeOut);
    }
 
    public boolean isDisplayed(String... locator) {
@@ -44,9 +43,9 @@ public class Checks {
       }
    }
 
-   public boolean isClickable(WebElement locator) {
+   public boolean isClickable(String locator) {
       try {
-         wait.until(elementToBeClickable(locator));
+         wait.until(elementToBeClickable(xpath(locator)));
          return true;
       } catch (Exception e) {
          e.printStackTrace();
@@ -66,7 +65,7 @@ public class Checks {
       }
    }
 
-   public void setExplicitWaitBySeconds(int seconds) {
+   public void setExplicitWaitBySeconds(long seconds) {
       wait.withTimeout(Duration.ofSeconds(seconds));
    }
 }

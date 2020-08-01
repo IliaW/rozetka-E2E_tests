@@ -17,7 +17,7 @@ public class CheckoutPage extends Driver implements WebPage {
    private final String STREET_FIELD = "//input[@id = 'reciever_street_1']";
    private final String HOUSE_FIELD = "//input[@id = 'reciever_house_1']";
    private final String FLAT_FIELD = "//input[@id = 'reciever_flat_1']";
-   private final String CARD_NUMBER_FIELD = "//input[@class = 'common-input-field' and @id='cardNumber'] ";
+   private final String CARD_NUMBER_FIELD = "//input[@class = 'common-input-field' and @id='cardNumber']";
    private final String MONTH_FIELD = "//input[@id = 'month']";
    private final String YEAR_FIELD = "//input[@id = 'year']";
    private final String CVV_FIELD = "//input[@id = 'cvv']";
@@ -34,18 +34,18 @@ public class CheckoutPage extends Driver implements WebPage {
 
    @Override
    public boolean isLoaded() {
-      checkThat.setExplicitWaitBySeconds(2);
+      setExplicitlyWait(2);
       if (checkThat.isDisplayed(OLD_VERSION_PAGE_BUTTON)) {
-         click(OLD_VERSION_PAGE_BUTTON);
+         checkThat.isClickable(OLD_VERSION_PAGE_BUTTON);
+         click(OLD_VERSION_PAGE_BUTTON); // Open old version of the checkout page
       }
-      checkThat.setExplicitWaitBySeconds(checkThat.DEFAULT_EXPLICIT_WAIT_TIME);
+      setExplicitlyWait(DEFAULT_EXPLICIT_WAIT_TIME);
       return checkThat.isDisplayed(CHECKOUT_HEADER, NAME_SURNAME_FIELD);
    }
 
    @Step("Set '{nameAndSurname}' in Name field]")
    public CheckoutPage setNameAndSurname(String nameAndSurname) {
       if (isLoaded()) {
-         sleep(1000);
          enterText(nameAndSurname, NAME_SURNAME_FIELD);
       }
       return this;
@@ -55,7 +55,7 @@ public class CheckoutPage extends Driver implements WebPage {
    public CheckoutPage setCity(String city) {
       enterText(city, CITY_FIELD);
       sleep(2000);
-      keyboard.pressTAB();
+      keyboard.pressTAB(); //For hide dropdown list
       return this;
    }
 
@@ -72,12 +72,11 @@ public class CheckoutPage extends Driver implements WebPage {
    }
 
    private boolean nextStepButtonIsEnable() {
-      sleep(2000);
       String statusLocator = find("//button[contains(text(), 'Далее')]/parent::span").getAttribute("class");
       return !statusLocator.contains("disabled");
    }
 
-   @Step("Set Street:'{street}', House:'{house}', Flat:'{flat}' in the Address fields")
+   @Step("Set Street: '{street}', House: '{house}', Flat: '{flat}' in the Address fields")
    public CheckoutPage setAddress(String street, String house, String flat) {
       if (checkThat.isDisplayed(COURIER_CHECKBOX)) {
          clickJSE(COURIER_CHECKBOX);
@@ -95,13 +94,20 @@ public class CheckoutPage extends Driver implements WebPage {
       if (checkThat.isDisplayed(CARD_CHECKBOX)) {
          clickJSE(CARD_CHECKBOX);
          clickJSE(ONLINE_CARD_CHECKBOX);
-         sleep(7000);
-         enterText(cardNumber, CARD_NUMBER_FIELD);
-         enterText(month, MONTH_FIELD);
-         enterText(year, YEAR_FIELD);
-         enterText(cvv, CVV_FIELD);
+         setExplicitlyWait(20);
+         setImplicitWait(20);
+         if (checkThat.isDisplayed(CARD_NUMBER_FIELD)) {
+            enterTextJSE(cardNumber, CARD_NUMBER_FIELD);
+            enterTextJSE(month, MONTH_FIELD);
+            enterTextJSE(year, YEAR_FIELD);
+            enterTextJSE(cvv, CVV_FIELD);
+         }
+         setExplicitlyWait(DEFAULT_EXPLICIT_WAIT_TIME);
       }
-      sleep(2000);
       return this;
+   }
+
+   public boolean addressFieldIsLoaded() {
+      return checkThat.isDisplayed(STREET_FIELD, HOUSE_FIELD, FLAT_FIELD);
    }
 }

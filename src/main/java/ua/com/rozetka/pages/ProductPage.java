@@ -24,18 +24,19 @@ public class ProductPage extends Driver implements WebPage {
    }
 
    private void closeSelectCityPopup() {
-      checkThat.setExplicitWaitBySeconds(2);
+      setExplicitlyWait(3);
       if (checkThat.isDisplayed(SELECT_CITY_POPUP)) {
          click(CLOSE_POPUP);
       }
-      checkThat.setExplicitWaitBySeconds(checkThat.DEFAULT_EXPLICIT_WAIT_TIME);
+      setExplicitlyWait(DEFAULT_EXPLICIT_WAIT_TIME);
    }
 
    @Step("Click [Buy]")
    public ProductPage clickBuyButton() {
       if (checkThat.isDisplayed(BUY_BUTTON)) {
+         checkThat.isClickable(BUY_BUTTON);
          click(BUY_BUTTON);
-         sleep(1000);
+         sleep(1000); //ElementClickInterceptedException occurred
          closeSelectCityPopup();
          checkThat.isDisplayed(ITEM_IN_THE_CART_BUTTON);
       }

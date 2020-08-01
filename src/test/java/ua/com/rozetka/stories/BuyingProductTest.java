@@ -8,10 +8,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ua.com.rozetka.Launcher;
-import ua.com.rozetka.models.Address;
-import ua.com.rozetka.models.Product;
-import ua.com.rozetka.models.User;
-import ua.com.rozetka.models.UserBuilder;
+import ua.com.rozetka.models.*;
 import ua.com.rozetka.pages.CheckoutPage;
 import ua.com.rozetka.pages.MainPage;
 import ua.com.rozetka.pages.ProductPage;
@@ -48,6 +45,7 @@ public class BuyingProductTest extends Launcher {
               .setSurname("Вовк")
               .setPhoneNumber("0630000000")
               .setAddress(new Address("Киев", "Крещатик", "1", "1"))
+              .setCard(new Card("0000000000000000", "08", "25", "111"))
               .create();
    }
 
@@ -56,7 +54,7 @@ public class BuyingProductTest extends Launcher {
       app.screen.takeScreenshot(app.getDriver());
    }
 
-   @Test(priority = 1)
+   @Test
    @Feature("Authorization")
    @Description(value = "Login with valid credential")
    @Severity(SeverityLevel.NORMAL)
@@ -70,12 +68,11 @@ public class BuyingProductTest extends Launcher {
       assertThat(mainPage.isLoaded()).isTrue();
    }
 
-   @Test(priority = 2)
+   @Test(dependsOnMethods = "loginWithValidCredentialTest")
    @Feature("Shopping Cart")
    @Description(value = "Adding random product to shopping cart")
    @Severity(SeverityLevel.CRITICAL)
    public void addItemToCartTest() {
-      mainPage.openByURL();
       mainPage.openRandomCategory();
       productsPage.openRandomProductOnThePage();
       Product product = new Product(productPage.getProductName());
@@ -84,7 +81,7 @@ public class BuyingProductTest extends Launcher {
       assertThat(shoppingCartMW.getListOfProducts()).contains(product.getName());
    }
 
-   @Test(priority = 3)
+   @Test(dependsOnMethods = "addItemToCartTest")
    @Feature("Checkout")
    @Description(value = "Filling out order form with user data")
    @Severity(SeverityLevel.CRITICAL)
@@ -100,6 +97,6 @@ public class BuyingProductTest extends Launcher {
               user.getAddress().getHouse(),
               user.getAddress().getFlat());
       //checkoutPage.clickOrderButton();
-      //assertThat("something happens");
+      assertThat(checkoutPage.addressFieldIsLoaded()).isTrue();
    }
 }

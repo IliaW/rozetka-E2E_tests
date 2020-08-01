@@ -39,9 +39,13 @@ public class ShoppingCartMW extends Driver implements ModalWindow {
 
    @Step("Click [Order]")
    public void clickOrderButton() {
+      setExplicitlyWait(15);
       if (checkThat.isDisplayed(CHECKOUT_BUTTON)) {
+         checkThat.isClickable(CHECKOUT_BUTTON);
          click(CHECKOUT_BUTTON);
+         sleep(1000); // ElementClickInterceptedException occurred
       }
+      setExplicitlyWait(DEFAULT_EXPLICIT_WAIT_TIME);
    }
 
    public List<String> getListOfProducts() {

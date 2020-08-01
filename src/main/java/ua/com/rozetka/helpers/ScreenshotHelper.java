@@ -13,7 +13,7 @@ public class ScreenshotHelper {
 
    public void takeScreenshot(WebDriver wd) {
       File tempFile = ((TakesScreenshot) wd).getScreenshotAs(OutputType.FILE);
-      File screen = new File("src/main/resources/screenshots", "Screen_" + System.currentTimeMillis() + ".png");
+      File screen = new File("src/test/resources/screenshots", "Screen_" + System.currentTimeMillis() + ".png");
       try {
          Files.copy(tempFile, screen);
          saveScreenshot(screen);

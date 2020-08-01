@@ -19,10 +19,11 @@ public abstract class Driver {
    protected Actions action;
    protected KeyboardHelper keyboard;
    protected final int DEFAULT_IMPLICIT_WAIT_TIME = 10;
+   protected final int DEFAULT_EXPLICIT_WAIT_TIME = 10;
 
    public Driver(WebDriver wd) {
       this.wd = wd;
-      checkThat = new Checks(wd);
+      checkThat = new Checks(wd, DEFAULT_EXPLICIT_WAIT_TIME);
       action = new Actions(wd);
       keyboard = new KeyboardHelper();
       wd.manage().timeouts().implicitlyWait(DEFAULT_IMPLICIT_WAIT_TIME, TimeUnit.SECONDS);
@@ -44,21 +45,33 @@ public abstract class Driver {
       find(locator).click();
    }
 
+   public void clickJSE(String locator) {
+      WebElement element = find(locator);
+      JavascriptExecutor jse = (JavascriptExecutor) wd;
+      jse.executeScript("arguments[0].click();", element);
+   }
+
    public void enterText(String text, String fieldLocator) {
       WebElement field = find(fieldLocator);
       field.clear();
       field.sendKeys(text);
    }
 
-   public void setImplicitWaitBySeconds(int seconds) {
+   public void enterTextJSE(String text, String fieldLocator) {
+      WebElement element = find(fieldLocator);
+      JavascriptExecutor jse = (JavascriptExecutor) wd;
+      String arg = String.format("arguments[0].value='%s';", text);
+      jse.executeScript(arg, element);
+   }
+
+   public void setImplicitWait(long seconds) {
       wd.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
    }
 
-   public void clickJSE(String locator) {
-      WebElement element = find(locator);
-      JavascriptExecutor executor = (JavascriptExecutor) wd;
-      executor.executeScript("arguments[0].click();", element);
+   public void setExplicitlyWait(long seconds) {
+      checkThat.setExplicitWaitBySeconds(seconds);
    }
+
 
    public void sleep(long ms) {
       try {
