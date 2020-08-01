@@ -18,6 +18,7 @@ public abstract class Driver {
    protected Checks checkThat;
    protected Actions action;
    protected KeyboardHelper keyboard;
+   private JavascriptExecutor jse;
    protected final int DEFAULT_IMPLICIT_WAIT_TIME = 10;
    protected final int DEFAULT_EXPLICIT_WAIT_TIME = 10;
 
@@ -26,6 +27,7 @@ public abstract class Driver {
       checkThat = new Checks(wd, DEFAULT_EXPLICIT_WAIT_TIME);
       action = new Actions(wd);
       keyboard = new KeyboardHelper();
+      jse = (JavascriptExecutor) this.wd;
       wd.manage().timeouts().implicitlyWait(DEFAULT_IMPLICIT_WAIT_TIME, TimeUnit.SECONDS);
    }
 
@@ -46,9 +48,7 @@ public abstract class Driver {
    }
 
    public void clickJSE(String locator) {
-      WebElement element = find(locator);
-      JavascriptExecutor jse = (JavascriptExecutor) wd;
-      jse.executeScript("arguments[0].click();", element);
+      jse.executeScript("arguments[0].click();", find(locator));
    }
 
    public void enterText(String text, String fieldLocator) {
@@ -58,10 +58,13 @@ public abstract class Driver {
    }
 
    public void enterTextJSE(String text, String fieldLocator) {
-      WebElement element = find(fieldLocator);
-      JavascriptExecutor jse = (JavascriptExecutor) wd;
       String arg = String.format("arguments[0].value='%s';", text);
-      jse.executeScript(arg, element);
+      jse.executeScript(arg, find(fieldLocator));
+   }
+
+   public void scrollToElement(String locator) {
+      jse.executeScript("arguments[0].scrollIntoView();", find(locator));
+
    }
 
    public void setImplicitWait(long seconds) {

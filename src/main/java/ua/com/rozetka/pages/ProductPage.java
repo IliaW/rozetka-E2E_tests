@@ -34,9 +34,7 @@ public class ProductPage extends Driver implements WebPage {
    @Step("Click [Buy]")
    public ProductPage clickBuyButton() {
       if (checkThat.isDisplayed(BUY_BUTTON)) {
-         checkThat.isClickable(BUY_BUTTON);
-         click(BUY_BUTTON);
-         sleep(1000); //ElementClickInterceptedException occurred
+         clickJSE(BUY_BUTTON);
          closeSelectCityPopup();
          checkThat.isDisplayed(ITEM_IN_THE_CART_BUTTON);
       }

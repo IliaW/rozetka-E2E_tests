@@ -36,8 +36,7 @@ public class CheckoutPage extends Driver implements WebPage {
    public boolean isLoaded() {
       setExplicitlyWait(2);
       if (checkThat.isDisplayed(OLD_VERSION_PAGE_BUTTON)) {
-         checkThat.isClickable(OLD_VERSION_PAGE_BUTTON);
-         click(OLD_VERSION_PAGE_BUTTON); // Open old version of the checkout page
+         clickJSE(OLD_VERSION_PAGE_BUTTON); // Open old version of the checkout page
       }
       setExplicitlyWait(DEFAULT_EXPLICIT_WAIT_TIME);
       return checkThat.isDisplayed(CHECKOUT_HEADER, NAME_SURNAME_FIELD);
@@ -68,7 +67,7 @@ public class CheckoutPage extends Driver implements WebPage {
 
    @Step("Click [Next]")
    public void clickNextButton() {
-      click(NEXT_STEP_BUTTON);
+      clickJSE(NEXT_STEP_BUTTON);
    }
 
    private boolean nextStepButtonIsEnable() {
@@ -79,6 +78,7 @@ public class CheckoutPage extends Driver implements WebPage {
    @Step("Set Street: '{street}', House: '{house}', Flat: '{flat}' in the Address fields")
    public CheckoutPage setAddress(String street, String house, String flat) {
       if (checkThat.isDisplayed(COURIER_CHECKBOX)) {
+         scrollToElement(COURIER_CHECKBOX);
          clickJSE(COURIER_CHECKBOX);
          if (checkThat.isDisplayed(STREET_FIELD)) {
             enterText(street, STREET_FIELD);
@@ -92,10 +92,10 @@ public class CheckoutPage extends Driver implements WebPage {
    @Step("Enter card credential: '{cardNumber}', '{month}', '{year}', '{cvv}'")
    public CheckoutPage payByCard(String cardNumber, String month, String year, String cvv) {
       if (checkThat.isDisplayed(CARD_CHECKBOX)) {
+         scrollToElement(CARD_CHECKBOX);
          clickJSE(CARD_CHECKBOX);
          clickJSE(ONLINE_CARD_CHECKBOX);
          setExplicitlyWait(20);
-         setImplicitWait(20);
          if (checkThat.isDisplayed(CARD_NUMBER_FIELD)) {
             enterTextJSE(cardNumber, CARD_NUMBER_FIELD);
             enterTextJSE(month, MONTH_FIELD);
