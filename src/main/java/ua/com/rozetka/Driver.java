@@ -67,6 +67,14 @@ public abstract class Driver {
 
    }
 
+   public void switchToFrame(String frameLocator){
+      wd.switchTo().frame(find(frameLocator));
+   }
+
+   public void switchToDefaultContent(){
+      wd.switchTo().defaultContent();
+   }
+
    public void setImplicitWait(long seconds) {
       wd.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
    }

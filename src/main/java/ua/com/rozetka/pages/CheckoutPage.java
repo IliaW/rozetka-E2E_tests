@@ -17,6 +17,7 @@ public class CheckoutPage extends Driver implements WebPage {
    private final String STREET_FIELD = "//input[@id = 'reciever_street_1']";
    private final String HOUSE_FIELD = "//input[@id = 'reciever_house_1']";
    private final String FLAT_FIELD = "//input[@id = 'reciever_flat_1']";
+   private final String CARD_FRAME = "//div[@name = '4528_user_tokens']//iframe";
    private final String CARD_NUMBER_FIELD = "//input[@class = 'common-input-field' and @id='cardNumber']";
    private final String MONTH_FIELD = "//input[@id = 'month']";
    private final String YEAR_FIELD = "//input[@id = 'year']";
@@ -96,12 +97,14 @@ public class CheckoutPage extends Driver implements WebPage {
          clickJSE(CARD_CHECKBOX);
          clickJSE(ONLINE_CARD_CHECKBOX);
          setExplicitlyWait(20);
+         switchToFrame(CARD_FRAME);
          if (checkThat.isDisplayed(CARD_NUMBER_FIELD)) {
-            enterTextJSE(cardNumber, CARD_NUMBER_FIELD);
-            enterTextJSE(month, MONTH_FIELD);
-            enterTextJSE(year, YEAR_FIELD);
-            enterTextJSE(cvv, CVV_FIELD);
+            enterText(cardNumber, CARD_NUMBER_FIELD);
+            enterText(month, MONTH_FIELD);
+            enterText(year, YEAR_FIELD);
+            enterText(cvv, CVV_FIELD);
          }
+         switchToDefaultContent();
          setExplicitlyWait(DEFAULT_EXPLICIT_WAIT_TIME);
       }
       return this;

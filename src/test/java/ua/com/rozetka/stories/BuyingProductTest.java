@@ -96,7 +96,12 @@ public class BuyingProductTest extends Launcher {
       checkoutPage.setAddress(user.getAddress().getStreet(),
               user.getAddress().getHouse(),
               user.getAddress().getFlat());
+      checkoutPage.payByCard(user.getCard().getNumberOfCard(),
+              user.getCard().getMonth(),
+              user.getCard().getYear(),
+              user.getCard().getCVV());
       //checkoutPage.clickOrderButton();
+      //assertThat("success page is displayed").isTrue();
       assertThat(checkoutPage.addressFieldIsLoaded()).isTrue();
    }
 }
